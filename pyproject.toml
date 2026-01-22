@@ -1,0 +1,23 @@
+[project]
+name = "drf-news-project"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "pradivliany",email = "yaroslavpradyvlianyi@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "django (>=6.0.1,<7.0.0)",
+    "djangorestframework (>=3.16.1,<4.0.0)",
+    "django-filter (>=25.2,<26.0)",
+    "django-cors-headers (>=4.9.0,<5.0.0)",
+    "pillow (>=12.1.0,<13.0.0)",
+    "psycopg2-binary (>=2.9.11,<3.0.0)",
+    "python-dotenv (>=1.2.1,<2.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

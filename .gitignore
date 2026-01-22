@@ -1,0 +1,12 @@
+# Envirinment variables
+.env
+
+# Python
+*.py[cod]
+__pycache__/
+.idea/
+
+# Django
+staticfiles/
+media/
+db.sqlite3
