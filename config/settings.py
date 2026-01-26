@@ -2,6 +2,7 @@
 # (configuration of apps, templated, middleware, database, ...)
 
 import os
+from datetime import timedelta
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -10,7 +11,6 @@ load_dotenv()
 
 # Project's base absolute dir -> where manage.py is.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Security key. (must be hidden in .env)
 SECRET_KEY = os.getenv("SECRET_KEY")
@@ -36,10 +36,13 @@ THIRD_PARTY_APPS = [
     "rest_framework",
     "corsheaders",
     "django_filters",
+    "rest_framework_simplejwt",
 ]
 
 # 3. Local apps list.
-LOCAL_APPS = [...]
+LOCAL_APPS = [
+    "apps.accounts",
+]
 
 # Collective list of all apps in project.
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -167,6 +170,24 @@ else:
         "http://localhost:5173",
     ]
 
+# JWT’s behavior.
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+    "REFRESH_TOKEN_LIFETIME": timedelta(
+        days=7
+    ),  # Allows user to be logged in for 7 days.
+    "ROTATE_REFRESH_TOKENS": True,  # User gets new refresh token after getting new access token.
+    "BLACKLIST_AFTER_ROTATION": True,  # Old refresh token becomes not usable.
+    "UPDATE_LAST_LOGIN": True,  # last_login field be updated after getting new token.
+    "ALGORITHM": "HS256",
+    "SIGNING_KEY": SECRET_KEY,
+    "VERIFYING_KEY": None,  # To create and verify uses same key.
+    "AUTH_HEADER_TYPES": ("Bearer",),  # Authorization: Bearer <token>.
+    "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
+    "USER_ID_FIELD": "id",
+    "USER_ID_CLAIM": "user_id",
+}
+
 # Security configurations.
 # 1. Safety from Cross-Site Scripting. (No JS scripts in form input allowed)
 SECURE_BROWSER_XSS_FILTER = True
@@ -222,6 +243,5 @@ LOGGING = {
         },
     },
 }
-
 
 Path.mkdir(BASE_DIR / "logs", exist_ok=True)
