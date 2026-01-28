@@ -66,7 +66,7 @@ class UserAdmin(BaseUserAdmin):
             },
         )
     ]
-    readonly_fields = ["created_at", "updated_at", "date_joined"]
+    readonly_fields = ["created_at", "updated_at", "date_joined", "last_login"]
 
 
 # We can use -> admin.site.register(User, UserAdmin) if not decorator.
