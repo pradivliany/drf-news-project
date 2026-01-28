@@ -42,6 +42,7 @@ THIRD_PARTY_APPS = [
 # 3. Local apps list.
 LOCAL_APPS = [
     "apps.accounts",
+    "apps.posts",
 ]
 
 # Collective list of all apps in project.
