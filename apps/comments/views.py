@@ -61,7 +61,7 @@ class CommentListCreateView(generics.ListCreateAPIView):
                 return super().get_serializer_class()
 
 
-class CommentDetailedView(generics.RetrieveUpdateDestroyAPIView):
+class CommentDetailView(generics.RetrieveUpdateDestroyAPIView):
     """
     API view for retrieving (GET), updating (PUT/PATCH), or deleting (DELETE) a specific comment.
 
