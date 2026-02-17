@@ -1,5 +1,6 @@
-from rest_framework import serializers
 from django.utils.text import slugify
+from rest_framework import serializers
+
 from .models import Category, Post
 
 
@@ -44,6 +45,7 @@ class PostListSerializer(serializers.ModelSerializer):
           manual modification of the data before it's sent as JSON. Returns dict.
         - 'slug', 'author', 'views_count' are protected from being modified by clint.
     """
+
     author = serializers.StringRelatedField()
     category = serializers.StringRelatedField()
     comments_count = serializers.ReadOnlyField()
@@ -51,9 +53,18 @@ class PostListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = [
-            "id", "title", "slug", "content", "image", "category",
-            "author", "status", "created_at", "updated_at",
-            "views_count", "comments_count"
+            "id",
+            "title",
+            "slug",
+            "content",
+            "image",
+            "category",
+            "author",
+            "status",
+            "created_at",
+            "updated_at",
+            "views_count",
+            "comments_count",
         ]
         read_only_fields = ["slug", "author", "views_count"]
 
@@ -73,6 +84,7 @@ class PostDetailSerializer(serializers.ModelSerializer):
         - if there is no category -> returns None.
         - 'comments_count' -> maps to model's @property.
     """
+
     author_info = serializers.SerializerMethodField()
     category_info = serializers.SerializerMethodField()
     comments_count = serializers.ReadOnlyField()
@@ -80,9 +92,20 @@ class PostDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = [
-            "id", "title", "slug", "content", "image", "category",
-            "category_info", "author", "author_info", "status",
-            "created_at", "updated_at", "views_count", "comments_count"
+            "id",
+            "title",
+            "slug",
+            "content",
+            "image",
+            "category",
+            "category_info",
+            "author",
+            "author_info",
+            "status",
+            "created_at",
+            "updated_at",
+            "views_count",
+            "comments_count",
         ]
         read_only_fields = ["slug", "author", "views_count"]
 
@@ -92,17 +115,13 @@ class PostDetailSerializer(serializers.ModelSerializer):
             "id": author.pk,
             "username": author.username,
             "full_name": author.full_name,
-            "avatar": author.avatar.url if author.avatar else None
+            "avatar": author.avatar.url if author.avatar else None,
         }
 
     def get_category_info(self, obj):
         if obj.category:
             category = obj.category
-            return {
-                "id": category.pk,
-                "name": category.name,
-                "slug": category.slug
-            }
+            return {"id": category.pk, "name": category.name, "slug": category.slug}
         return None
 
 
@@ -117,6 +136,7 @@ class PostCreateUpdateSerializer(serializers.ModelSerializer):
         - update(): checks if 'title' is being changed. If yes -> regenerates 'slug'.
         - Returns results by calling super() methods to handle DB operations.
     """
+
     class Meta:
         model = Post
         fields = ["title", "content", "image", "category", "status"]
@@ -127,6 +147,6 @@ class PostCreateUpdateSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
 
     def update(self, instance, validated_data):
-        if 'title' in validated_data:
+        if "title" in validated_data:
             validated_data["slug"] = slugify(validated_data["title"])
         return super().update(instance, validated_data)

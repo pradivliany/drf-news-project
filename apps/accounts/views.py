@@ -72,6 +72,7 @@ class LoginView(generics.GenericAPIView):
         f) SimpleJWT creates refresh and access token for this user.
         g) Response returns 200 OK with safe user data (via ProfileSerializer) and tokens.
     """
+
     serializer_class = UserLoginSerializer
     permission_classes = [permissions.AllowAny]
 
@@ -108,6 +109,7 @@ class ProfileView(generics.RetrieveUpdateAPIView):
     3) GET: DRF takes the object from get_object, passes it to the serializer, and returns 200 OK.
     4) Update (PUT/PATCH): DRF handles validation, calls .save() on the serializer, and updates the user in the DB.
     """
+
     queryset = User.objects.all()
     serializer_class = UserProfileSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -131,6 +133,7 @@ class ChangePasswordView(generics.UpdateAPIView):
     1) get_object(): Returns current authenticated user (self.request.user).
     2) update() method is overridden. Sets new password after validations and response contains message.
     """
+
     serializer_class = ChangePasswordSerializer
     permission_classes = [permissions.IsAuthenticated]
 
@@ -158,6 +161,7 @@ def logout_view(request):
     2) if ok -> putting token in blacklist and response 200 with message.
     3) if not -> 400 code with error message.
     """
+
     try:
         refresh_token = request.data.get("refresh_token")
         if refresh_token:
