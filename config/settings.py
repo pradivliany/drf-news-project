@@ -44,6 +44,8 @@ LOCAL_APPS = [
     "apps.accounts",
     "apps.posts",
     "apps.comments",
+    "apps.subscribe",
+    "apps.payment",
 ]
 
 # Collective list of all apps in project.
